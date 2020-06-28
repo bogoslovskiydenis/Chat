@@ -6,6 +6,8 @@ import android.view.View
 import android.widget.Toast
 import android.widget.Toolbar
 import com.example.chat.databinding.ActivityMainBinding
+import com.example.chat.ui.ChatFragment
+import com.example.chat.ui.SettingsFragment
 import com.mikepenz.materialdrawer.AccountHeader
 import com.mikepenz.materialdrawer.AccountHeaderBuilder
 import com.mikepenz.materialdrawer.Drawer
@@ -35,6 +37,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun initFunc() {
         setSupportActionBar(mToolbar)
+        //При запуске приложения устанавливаем в контейнер фрагмент Чат
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.dataContainer,ChatFragment()).commit()
         createHeader()
         createDrawer()
     }
@@ -98,7 +103,12 @@ class MainActivity : AppCompatActivity() {
                     position: Int,
                     drawerItem: IDrawerItem<*>
                 ): Boolean {
-                    Toast.makeText(applicationContext,position.toString(),Toast.LENGTH_SHORT).show()
+                    when(position){
+                        6-> //При запуске приложения устанавливаем в контейнер фрагмент Settings
+                            supportFragmentManager.beginTransaction()
+                                .addToBackStack(null)
+                                .replace(R.id.dataContainer,SettingsFragment()).commit()
+                    }
                     return false
                 }
             }).build()
