@@ -2,4 +2,13 @@
     <string name="app_name">Chat</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="settings_default_status">online</string>
+    <string name="settings_default_username">User Name</string>
+    <string name="settings_accoun">Account</string>
+    <string name="settings_default_number">number</string>
+    <string name="settings_change_number_phone">change number</string>
+    <string name="settings_login">login name</string>
+    <string name="settings_label_login">user name</string>
+    <string name="settings_dafault_bio">information bio</string>
+    <string name="settings_label_bio">write by information</string>
 </resources>
