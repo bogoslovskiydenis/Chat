@@ -13,4 +13,10 @@
     <string name="settings_label_bio">write by information</string>
     <string name="settings_menu_change_name">Change name</string>
     <string name="settings_menu_exit">Exit</string>
+    <string name="cd_register_image">register_image</string>
+    <string name="register_Text_enter_code">Enter Code</string>
+    <string name="register_text_we_sand">We send SMS with code your phone</string>
+    <string name="register_hint_default_code">- - - - - -</string>
+    <string name="register_title_your_phone">Your Phone</string>
+    <string name="register_enter_phone">Enter Phone number</string>
 </resources>
