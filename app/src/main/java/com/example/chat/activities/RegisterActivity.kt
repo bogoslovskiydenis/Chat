@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.chat.R
 import com.example.chat.databinding.ActivityRegisterBinding
 import com.example.chat.ui.fragments.EnterPhoneNumberFragment
+import com.example.chat.ui.utilits.replaceFragment
 
 
 class RegisterActivity : AppCompatActivity() {
@@ -22,10 +23,7 @@ class RegisterActivity : AppCompatActivity() {
         super.onStart()
         mainToolbar = mBiRegisterBinding.registerToolbar
         setSupportActionBar(mainToolbar)
-        title=getString(R.string.register_title_your_phone)
-        supportFragmentManager.beginTransaction()
-            .add(R.id.registerDataContainer,EnterPhoneNumberFragment())
-            .commit()
-
+        title = getString(R.string.register_title_your_phone)
+        replaceFragment(EnterPhoneNumberFragment())
     }
 }

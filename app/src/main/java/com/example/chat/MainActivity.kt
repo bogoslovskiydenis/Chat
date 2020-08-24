@@ -7,6 +7,9 @@ import com.example.chat.activities.RegisterActivity
 import com.example.chat.databinding.ActivityMainBinding
 import com.example.chat.ui.fragments.ChatsFragment
 import com.example.chat.ui.objects.AppDrawer
+import com.example.chat.ui.utilits.replaceActivity
+import com.example.chat.ui.utilits.replaceFragment
+
 
 
 class MainActivity : AppCompatActivity() {
@@ -27,21 +30,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initFunc() {
-        //Проверка на авторизацию val intent = Intent(this,RegisterActivity::class.java)
-        //                          startActivity(intent)
-        if(false) {
+
+        if (true) {
             setSupportActionBar(mainToolbar)
-            //appDrawer
             mainAppDrawer.create()
-            //create ChatsFragment
-            supportFragmentManager.beginTransaction()
-                .replace(
-                    R.id.dataContainer,
-                    ChatsFragment()
-                ).commit()
-        }else   {
-            val intent = Intent(this,RegisterActivity::class.java)
-            startActivity(intent)
+            replaceFragment(ChatsFragment())
+        } else {
+            //Utils -> function replaseActivity
+            replaceActivity(RegisterActivity())
         }
     }
 
