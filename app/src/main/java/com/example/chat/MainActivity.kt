@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initFunc() {
 
-        if (true) {
+        if (false) {
             setSupportActionBar(mainToolbar)
             mainAppDrawer.create()
             replaceFragment(ChatsFragment())
