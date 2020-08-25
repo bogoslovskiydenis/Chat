@@ -1,26 +1,44 @@
 package com.example.chat.ui.fragments
 
 import androidx.fragment.app.Fragment
+import com.example.chat.MainActivity
 import com.example.chat.R
+import com.example.chat.activities.RegisterActivity
+import com.example.chat.ui.utilits.AUTH
 import com.example.chat.ui.utilits.AppTextWatcher
+import com.example.chat.ui.utilits.replaceActivity
 import com.example.chat.ui.utilits.showToast
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.PhoneAuthCredential
+import com.google.firebase.auth.PhoneAuthProvider
 import kotlinx.android.synthetic.main.fragment_enter_code.*
 
 
-class EnterCodeFragment : Fragment(R.layout.fragment_enter_code) {
+class EnterCodeFragment(val phoneNumber: String, val id: String) :
+    Fragment(R.layout.fragment_enter_code) {
+
+
     override fun onStart() {
         super.onStart()
+        (activity as RegisterActivity).title = phoneNumber
         //Подключаемся к Поле EditText -> Подключаем addTextChangedListener
         register_input_code.addTextChangedListener(AppTextWatcher {
             val string: String = register_input_code.text.toString()
             if (string.length == 6) {
-                varificateCode()
+                enterCode()
             }
         })
     }
 
 
-    fun varificateCode() {
-        showToast("OK")
+    private fun enterCode() {
+        val code: String = register_input_code.text.toString()
+        val credential: PhoneAuthCredential = PhoneAuthProvider.getCredential(id, code)
+        AUTH.signInWithCredential(credential).addOnCompleteListener {
+            if (it.isSuccessful){
+                showToast("Welcome")
+                (activity as RegisterActivity).replaceActivity(MainActivity())
+            }else showToast(it.exception?.message.toString())
+        }
     }
 }
