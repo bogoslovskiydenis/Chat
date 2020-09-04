@@ -3,6 +3,7 @@ package com.example.chat.ui.objects
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.drawerlayout.widget.DrawerLayout
 import com.example.chat.R
 import com.example.chat.ui.fragments.SettingsFragment
 import com.example.chat.ui.utilits.replaceFragment
@@ -18,10 +19,31 @@ class AppDrawer(val mainActivity: AppCompatActivity, val toolbar: Toolbar) {
 
     private lateinit var mainDrawer: Drawer
     private lateinit var mainHeader: AccountHeader
+    private lateinit var mainDrawerLayout: DrawerLayout
 
     fun create() {
         createHeader()
         createDrawer()
+        mainDrawerLayout = mainDrawer.drawerLayout
+    }
+        //переход по стеку назад
+    fun disableDrawer() {
+        mainDrawer.actionBarDrawerToggle?.isDrawerIndicatorEnabled = false
+        mainActivity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        mainDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+        toolbar.setNavigationOnClickListener {
+            mainActivity.supportFragmentManager.popBackStack()
+        }
+    }
+
+    fun enableDrawer() {
+        //Сначала отключить кнопку Тогл после включить Тогл назад и разблокировать
+        mainActivity.supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        mainDrawer.actionBarDrawerToggle?.isDrawerIndicatorEnabled = true
+        mainDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+        toolbar.setNavigationOnClickListener {
+            mainDrawer.openDrawer()
+        }
     }
 
     private fun createDrawer() {

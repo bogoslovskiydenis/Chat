@@ -14,7 +14,7 @@ import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
     private lateinit var mainBinding: ActivityMainBinding
-    private lateinit var mainAppDrawer: AppDrawer
+    lateinit var mainAppDrawer: AppDrawer
     private lateinit var mainToolbar: androidx.appcompat.widget.Toolbar
 
 //    //auth FireBase
