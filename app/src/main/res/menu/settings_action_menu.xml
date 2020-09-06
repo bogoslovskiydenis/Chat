@@ -7,7 +7,7 @@
         app:showAsAction="ifRoom">
         <menu>
             <item
-                android:id="@+id/settings_menu"
+                android:id="@+id/settings_menu_change_name"
                 android:icon="@drawable/ic_btn_menu_change_name"
                 android:title="@string/settings_menu_change_name"
                 app:showAsAction="never" />
