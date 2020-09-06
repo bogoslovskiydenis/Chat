@@ -4,10 +4,7 @@ import androidx.fragment.app.Fragment
 import com.example.chat.MainActivity
 import com.example.chat.R
 import com.example.chat.activities.RegisterActivity
-import com.example.chat.ui.utilits.AUTH
-import com.example.chat.ui.utilits.AppTextWatcher
-import com.example.chat.ui.utilits.replaceActivity
-import com.example.chat.ui.utilits.showToast
+import com.example.chat.ui.utilits.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthProvider
@@ -34,11 +31,26 @@ class EnterCodeFragment(val phoneNumber: String, val id: String) :
     private fun enterCode() {
         val code: String = register_input_code.text.toString()
         val credential: PhoneAuthCredential = PhoneAuthProvider.getCredential(id, code)
-        AUTH.signInWithCredential(credential).addOnCompleteListener {
-            if (it.isSuccessful){
-                showToast("Welcome")
-                (activity as RegisterActivity).replaceActivity(MainActivity())
-            }else showToast(it.exception?.message.toString())
+        AUTH.signInWithCredential(credential).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                //безопасный вызов
+                val uid = AUTH.currentUser?.uid.toString()
+                //create map
+                var dateMap = mutableMapOf<String, Any>()
+                dateMap[CHILD_ID] = uid
+                dateMap[CHILD_PHONE] = phoneNumber
+                dateMap[CHILD_USERNAME] = uid
+                //обращение к базе данных
+                REF_DATABASE_ROOT.child(NODE_USERS).child(uid).updateChildren(dateMap)
+                    //callback
+                    .addOnCompleteListener { task2 ->
+                        if (task2.isSuccessful) {
+                            showToast("Welcome")
+                            (activity as RegisterActivity).replaceActivity(MainActivity())
+                        } else showToast(task2.exception?.message.toString())
+                    }
+
+            } else showToast(task.exception?.message.toString())
         }
     }
 }

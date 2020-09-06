@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.chat.R
 import com.example.chat.databinding.ActivityRegisterBinding
 import com.example.chat.ui.fragments.EnterPhoneNumberFragment
+import com.example.chat.ui.utilits.initFirebase
 import com.example.chat.ui.utilits.replaceFragment
 
 
@@ -17,6 +18,7 @@ class RegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         mBiRegisterBinding=ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(mBiRegisterBinding.root)
+        initFirebase()
     }
 
     override fun onStart() {

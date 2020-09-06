@@ -7,6 +7,7 @@ import com.example.chat.databinding.ActivityMainBinding
 import com.example.chat.ui.fragments.ChatsFragment
 import com.example.chat.ui.objects.AppDrawer
 import com.example.chat.ui.utilits.AUTH
+import com.example.chat.ui.utilits.initFirebase
 import com.example.chat.ui.utilits.replaceActivity
 import com.example.chat.ui.utilits.replaceFragment
 import com.google.firebase.auth.FirebaseAuth
@@ -49,7 +50,7 @@ class MainActivity : AppCompatActivity() {
         mainToolbar = mainBinding.mainToolbar
         mainAppDrawer = AppDrawer(this, mainToolbar)
         //firebase initialization
-        AUTH = FirebaseAuth.getInstance()
+        initFirebase()
     }
 
 }
