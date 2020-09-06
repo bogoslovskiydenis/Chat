@@ -1,7 +1,8 @@
 package com.example.chat.ui.fragments
 
-import android.os.Bundle
-import android.view.*
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import com.example.chat.MainActivity
 import com.example.chat.R
@@ -14,6 +15,10 @@ class ChangeNameFragment : Fragment(R.layout.fragment_change_name) {
     override fun onResume() {
         super.onResume()
         setHasOptionsMenu(true)
+        val fullnameList = USER.fullname.split(" ")
+        settings_input_name.setText(fullnameList[0])
+        settings_input_surname.setText(fullnameList[1])
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -33,12 +38,12 @@ class ChangeNameFragment : Fragment(R.layout.fragment_change_name) {
         if (name.isEmpty()) {
             showToast(getString(R.string.settings_name_is_empty))
         } else {
-            val fullname = " $name $surname "
+            val fullname = "$name $surname"
             REF_DATABASE_ROOT.child(NODE_USERS).child(UID).child(CHILD_FULLNAME)
                 .setValue(fullname).addOnCompleteListener {
                     if (it.isSuccessful) {
                         showToast(getString(R.string.toast_data_update))
-                        USER.fullname=fullname
+                        USER.fullname = fullname
                         fragmentManager?.popBackStack()
                     }
                 }

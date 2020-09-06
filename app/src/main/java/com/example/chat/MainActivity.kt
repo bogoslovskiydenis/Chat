@@ -4,13 +4,10 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.chat.activities.RegisterActivity
 import com.example.chat.databinding.ActivityMainBinding
+import com.example.chat.models.User
 import com.example.chat.ui.fragments.ChatsFragment
 import com.example.chat.ui.objects.AppDrawer
-import com.example.chat.ui.utilits.AUTH
-import com.example.chat.ui.utilits.initFirebase
-import com.example.chat.ui.utilits.replaceActivity
-import com.example.chat.ui.utilits.replaceFragment
-import com.google.firebase.auth.FirebaseAuth
+import com.example.chat.ui.utilits.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -18,8 +15,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var mainAppDrawer: AppDrawer
     private lateinit var mainToolbar: androidx.appcompat.widget.Toolbar
 
-//    //auth FireBase
-//    private lateinit var mainAuth: FirebaseAuth
+    //    auth FireBase
+    //    private lateinit var mainAuth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mainBinding = ActivityMainBinding.inflate(layoutInflater)
@@ -34,7 +31,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initFunc() {
         //Проверка пользователя
-        if (AUTH.currentUser!=null) {
+        if (AUTH.currentUser != null) {
             setSupportActionBar(mainToolbar)
             mainAppDrawer.create()
             replaceFragment(ChatsFragment(), false)
@@ -51,6 +48,15 @@ class MainActivity : AppCompatActivity() {
         mainAppDrawer = AppDrawer(this, mainToolbar)
         //firebase initialization
         initFirebase()
+        initUser()
     }
 
+    private fun initUser() {
+        REF_DATABASE_ROOT.child(NODE_USERS).child(UID)
+            .addListenerForSingleValueEvent(AppValueEventListener {
+                USER = it.getValue(User::class.java) ?: User()
+
+            })
+    }
 }
+

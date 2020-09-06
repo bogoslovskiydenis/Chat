@@ -28,45 +28,45 @@ class EnterPhoneNumberFragment : Fragment(R.layout.fragment_enter_phone_number) 
             //Проверяет есть ли Верификация
             override fun onVerificationCompleted(credential: PhoneAuthCredential) {
                 AUTH.signInWithCredential(credential).addOnCompleteListener {
-                    if (it.isSuccessful){
+                    if (it.isSuccessful) {
                         showToast("Welcome")
                         (activity as RegisterActivity).replaceActivity(MainActivity())
-                    }else showToast(it.exception?.message.toString())
+                    } else showToast(it.exception?.message.toString())
                 }
 
-        }
+            }
 
             override fun onCodeSent(id: String, token: PhoneAuthProvider.ForceResendingToken) {
-                replaceFragment(EnterCodeFragment(mainPhoneNumber,id))
+                replaceFragment(EnterCodeFragment(mainPhoneNumber, id))
             }
 
             //Проблема с Верификацией
-        override fun onVerificationFailed(p0: FirebaseException) {
-            showToast(p0.message.toString())
+            override fun onVerificationFailed(p0: FirebaseException) {
+                showToast(p0.message.toString())
+            }
+
         }
-
+        register_btn_next.setOnClickListener { sendCode() }
     }
-    register_btn_next.setOnClickListener{ sendCode() }
-}
 
 
-private fun sendCode() {
-    // проверка введен ли номер
-    if (register_input_phone_numner.text.toString().isEmpty()) {
-        showToast(getString(R.string.register_enter_phone))
-    } else {
-        autUser()
+    private fun sendCode() {
+        // проверка введен ли номер
+        if (register_input_phone_numner.text.toString().isEmpty()) {
+            showToast(getString(R.string.register_enter_phone))
+        } else {
+            authUser()
+        }
     }
-}
 
-private fun autUser() {
-    mainPhoneNumber = register_input_phone_numner.text.toString()
-    PhoneAuthProvider.getInstance().verifyPhoneNumber(
-        mainPhoneNumber,
-        60,
-        TimeUnit.SECONDS,
-        activity as RegisterActivity,
-        mainCallback
-    )
-}
+    private fun authUser() {
+        mainPhoneNumber = register_input_phone_numner.text.toString()
+        PhoneAuthProvider.getInstance().verifyPhoneNumber(
+            mainPhoneNumber,
+            60,
+            TimeUnit.SECONDS,
+            activity as RegisterActivity,
+            mainCallback
+        )
+    }
 }
